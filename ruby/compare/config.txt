@@ -1,0 +1,2 @@
+H:/project/kaifa/client/Arpg/bin
+\\192.168.200.11\data\web\mrsg
