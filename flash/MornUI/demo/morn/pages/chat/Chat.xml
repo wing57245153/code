@@ -1,0 +1,5 @@
+<View sceneWidth="400" sceneHeight="300" sceneColor="0xffffff" sceneBg="" layers="1,1,0,0,第 1 层">
+  <Image url="png.bg.bg_1" x="-4" y="-3" layer="1"/>
+  <Button label="label" skin="png.other.btn_tab" x="29" y="65" layer="1" var="tab"/>
+  <Image url="png.module.chat.bg" x="128" y="197" layer="1"/>
+</View>
