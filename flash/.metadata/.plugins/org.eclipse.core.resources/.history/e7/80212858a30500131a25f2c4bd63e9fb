@@ -1,0 +1,18 @@
+package
+{
+	import flash.display.Sprite;
+	import flash.events.Event;
+	
+	public class Game extends Sprite
+	{
+		public function Game()
+		{
+			this.addEventListener(Event.ADDED_TO_STAGE, onAddStageHandler);
+		}
+		
+		private function init():void
+		{
+			
+		}
+	}
+}

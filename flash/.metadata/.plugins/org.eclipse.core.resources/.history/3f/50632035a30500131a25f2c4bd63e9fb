@@ -1,0 +1,19 @@
+package GameCore.manager
+{
+	import GameCore.interfaces.Interface;
+	
+	import org.osflash.signals.Signal;
+
+	public class AppManager
+	{
+		public function AppManager()
+		{
+			init();
+		}
+		
+		private function init():void
+		{
+			Interface.gameBus = new Signal();
+		}
+	}
+}

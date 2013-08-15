@@ -1,0 +1,14 @@
+package GameCore.manager
+{
+	public class AppManager
+	{
+		public function AppManager()
+		{
+		}
+		
+		private function init():void
+		{
+			
+		}
+	}
+}

@@ -1,0 +1,13 @@
+package GameCore.core
+{
+	import GameCore.interfaces.IDepose;
+	
+	import flash.display.Sprite;
+
+	public class BasicModule extends Sprite implements IDepose
+	{
+		public function BasicModule()
+		{
+		}
+	}
+}

@@ -1,0 +1,13 @@
+package GameCore.interfaces
+{
+	import org.osflash.signals.ISignal;
+
+	public class Interface
+	{
+		public function Interface()
+		{
+		}
+		
+		public static var gameBus:ISignal;
+	}
+}

@@ -1,0 +1,9 @@
+package GameCore.core
+{
+	public class BasicModule
+	{
+		public function BasicModule()
+		{
+		}
+	}
+}

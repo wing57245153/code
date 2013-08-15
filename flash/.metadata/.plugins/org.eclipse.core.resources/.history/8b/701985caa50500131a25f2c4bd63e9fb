@@ -1,0 +1,63 @@
+package com.zsj.commons.loader
+{
+    import com.zsj.commons.loader.events.LoaderEvent;
+    import com.zsj.commons.loader.events.LocalCacheEvent;
+    import com.zsj.core.Config;
+    import com.zsj.core.Interface;
+    import com.zsj.events.AppEvent;
+    import com.zsj.events.iEvent;
+
+    import flash.events.Event;
+    import flash.events.EventDispatcher;
+    import flash.system.ApplicationDomain;
+    import flash.system.LoaderContext;
+    import flash.utils.Dictionary;
+
+    /**
+     * Module 加载器
+     * @author Selon
+     */
+    public class ModuleLoader extends EventDispatcher
+    {
+        public static const COMPLETE:String = "module_complete";
+
+        private var _loadingDic:Dictionary;
+
+        public function ModuleLoader()
+        {
+            _loadingDic = new Dictionary();
+            LocalCacheManager.getInstance().addEventListener(Event.COMPLETE, onCompleteHandler);
+        }
+
+        public function load(url:String) : void
+        {
+            _loadingDic[url] = true;
+            LocalCacheManager.getInstance().loadFile(url);
+            var isFrame:Boolean;
+            for each(var path:String in Config.frameList)
+            {
+                if(url.indexOf(path) > -1)
+                {
+                    isFrame = true;
+                    break;
+                }
+            }
+            if(!isFrame)
+//                Interface.gameBus.dispatchEvent(new iEvent(AppEvent.LOADING_MODULE_BEGIN,
+//                    {name: "模块"}));
+        }
+
+        private function onCompleteHandler(evt:LocalCacheEvent) : void
+        {
+            if(_loadingDic[evt.url])
+            {
+//                Interface.gameBus.dispatchEvent(new iEvent(AppEvent.LOADING_MODULE_END));
+                var item:ResLoaderItem = new ResLoaderItem();
+                item.data = evt.data;
+                item.url = evt.url;
+                dispatchEvent(new LoaderEvent(ModuleLoader.COMPLETE, item));
+                delete _loadingDic[evt.url];
+            }
+        }
+    }
+}

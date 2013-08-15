@@ -1,0 +1,110 @@
+package com.zsj.commons.display
+{
+    import com.zsj.jct.IDepose;
+
+    import flash.display.BitmapData;
+    import flash.display.MovieClip;
+    import flash.geom.Matrix;
+    import flash.geom.Rectangle;
+    import flash.utils.Dictionary;
+
+    public class MovieClipData implements IDepose
+    {
+        public var url:String = null;
+        public var canGC:Boolean;
+        public var register:int; //////被使用计数器
+        public var lastUserTime:Number = 0;
+        public var bitmapFrameList:Array;
+
+        private var _mc:MovieClip;
+
+        public function get mc() : MovieClip
+        {
+            return _mc;
+        }
+
+        public function set mc(value:MovieClip) : void
+        {
+            _mc = value;
+            if(_mc == null)
+                return;
+            if(bitmapFrameList)
+            {
+                for(var index:* in bitmapFrameList)
+                {
+                    if(bitmapFrameList[index] != null)
+                    {
+                        bitmapFrameList[index].dispose();
+                        bitmapFrameList[index] = null;
+                    }
+                }
+                bitmapFrameList = null;
+            }
+            bitmapFrameList = [];
+            for(var i:int = 0; i < mc.totalFrames; i++)
+            {
+                bitmapFrameList.push(null);
+            }
+        }
+
+        public function MovieClipData()
+        {
+
+        }
+
+        public function depose() : void
+        {
+            for(var i:* in bitmapFrameList)
+            {
+                if(bitmapFrameList[i] != null)
+                {
+                    bitmapFrameList[i].dispose();
+                    bitmapFrameList[i] = null;
+                }
+            }
+            bitmapFrameList = null;
+            url = null;
+            mc = null;
+        }
+
+        public function get length() : int
+        {
+            if(bitmapFrameList == null)
+                return 0;
+            return bitmapFrameList.length;
+        }
+
+        public function getbitmapFrame(frame:int) : BitmapFrame
+        {
+            var bitmapFrame:BitmapFrame;
+            if(mc)
+            {
+                var rect:Rectangle;
+                mc.gotoAndStop(frame);
+                rect = mc.getBounds(mc);
+                if(rect.height < 1 || rect.width < 1)
+                {
+                    bitmapFrame = null;
+                }
+                else
+                {
+                    var width:int = rect.width + rect.x;
+                    var height:int = rect.height + rect.y;
+                    /*if(width > 1200)
+                        width = 1200;
+                    if(height > 650)
+                        height = 650;*/
+                    var bitmapdata:BitmapData = new BitmapData(width, height, true, 0);
+                    bitmapdata.draw(mc, new Matrix(1, 0, 0, 1, 0, 0), null, null, null, false);
+                    bitmapFrame = new BitmapFrame();
+                    bitmapFrame.bitmapData = bitmapdata;
+                    bitmapFrame.label = mc.currentLabel;
+                    bitmapFrame.rx = 0;
+                    bitmapFrame.ry = 0;
+                }
+            }
+            return bitmapFrame;
+        }
+    }
+}
+

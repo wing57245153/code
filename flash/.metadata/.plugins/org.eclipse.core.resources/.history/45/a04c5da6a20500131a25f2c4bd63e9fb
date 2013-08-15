@@ -1,0 +1,9 @@
+package GameCore.manager
+{
+	public class ModuleManager
+	{
+		public function ModuleManager()
+		{
+		}
+	}
+}

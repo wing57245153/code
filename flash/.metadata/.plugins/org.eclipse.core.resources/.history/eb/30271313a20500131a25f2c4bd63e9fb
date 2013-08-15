@@ -1,0 +1,9 @@
+package GameCore.interfaces
+{
+	public class Interface
+	{
+		public function Interface()
+		{
+		}
+	}
+}

@@ -1,0 +1,10 @@
+package GameCore.core
+{
+	public class BasicManager
+	{
+		private var messenger:Signal;//
+		public function BasicManager()
+		{
+		}
+	}
+}

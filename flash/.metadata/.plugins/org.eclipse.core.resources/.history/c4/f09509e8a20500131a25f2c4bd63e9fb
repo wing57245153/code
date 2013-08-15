@@ -1,0 +1,12 @@
+package GameCore.manager
+{
+	import GameCore.core.BasicManager;
+
+	public class ModuleManager extends BasicManager
+	{
+		public function ModuleManager()
+		{
+			
+		}
+	}
+}

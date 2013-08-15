@@ -1,5 +1,8 @@
 <View sceneWidth="400" sceneHeight="300" sceneColor="0xffffff" sceneBg="" layers="1,1,0,0,第 1 层">
-  <Image url="png.bg.bg_1" x="-4" y="-3" layer="1"/>
+  <Image url="png.bg.bg_1" x="-9" y="-21" layer="1"/>
   <Button label="label" skin="png.other.btn_tab" x="29" y="65" layer="1" var="tab"/>
-  <Image url="png.module.chat.bg" x="128" y="197" layer="1"/>
+  <Image url="png.module.chat.bg" x="120" y="172" layer="1"/>
+  <Box layers="1,1,0" layer="1" x="73" y="147">
+    <CheckBox label="aaalabel" skin="png.comp.checkbox" layer="1" labelColors="aa"/>
+  </Box>
 </View>

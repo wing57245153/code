@@ -1,0 +1,9 @@
+package GameCore.core
+{
+	public class BaseManager
+	{
+		public function BaseManager()
+		{
+		}
+	}
+}

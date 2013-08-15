@@ -1,5 +1,6 @@
 package 
 {
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import game.view.chat.ChatView;
@@ -29,7 +30,16 @@ package
 		
 		private function loadComplete():void 
 		{
-			addChild(new ChatView());
+			//addChild(new ChatView());
+			var mc:MovieClip = new MovieClip();
+			mc.addFrameScript(0, fun);
+			mc.gotoAndStop(1);
+			this.addChild(mc);
+		}
+		
+		private function fun():void
+		{
+			trace(111);
 		}
 		
 	}
