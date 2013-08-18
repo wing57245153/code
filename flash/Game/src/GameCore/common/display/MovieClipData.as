@@ -1,13 +1,12 @@
-package com.zsj.commons.display
+package GameCore.common.display
 {
 
-    import GameCore.interfaces.IDepose;
-    
     import flash.display.BitmapData;
     import flash.display.MovieClip;
     import flash.geom.Matrix;
     import flash.geom.Rectangle;
-    import flash.utils.Dictionary;
+    
+    import GameCore.interfaces.IDepose;
 
     public class MovieClipData implements IDepose
     {

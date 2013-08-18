@@ -1,4 +1,4 @@
-package com.zsj.commons.display
+package GameCore.common.display
 {
     import flash.display.BitmapData;
 

@@ -1,4 +1,4 @@
-package com.zsj.commons.cache
+package GameCore.common.cache
 {
 
 	/**

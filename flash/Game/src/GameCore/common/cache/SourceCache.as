@@ -4,15 +4,15 @@ package GameCore.common.cache
     import flash.display.BitmapData;
     import flash.display.MovieClip;
     import flash.events.Event;
-    import flash.events.EventDispatcher;
     import flash.events.IOErrorEvent;
     import flash.utils.Dictionary;
     import flash.utils.getTimer;
     
+    import GameCore.common.display.MovieClipData;
     import GameCore.common.loader.LocalCacheManager;
-    import GameCore.common.loader.events.LocalCacheEvent;
+    import GameCore.util.TimerManager;
 
-    public class SourceCache extends EventDispatcher implements ISourceCache
+    public class SourceCache  implements ISourceCache
     {
         public var _cacheDic:Dictionary;
         public var _gcDic:Dictionary;
@@ -31,12 +31,10 @@ package GameCore.common.cache
             _loadingDic = new Dictionary();
             _errorDic = new Dictionary();
 
-            LocalCacheManager.getInstance().addEventListener(Event.COMPLETE, onCompleteHandler);
-            LocalCacheManager.getInstance().addEventListener(IOErrorEvent.IO_ERROR,
-                onIoErrorHandler);
-//            TimerManager.getInstance().add(60000 * 2, tempGC);
+			LocalCacheManager.getInstance().loaderSignal.add(onLoadHandler);
+           TimerManager.getInstance().add(60000 * 2, tempGC);
         }
-
+		
         private static var _instance:SourceCache;
 
         public static function getInstance() : SourceCache
@@ -175,22 +173,34 @@ package GameCore.common.cache
             _loadingDic[str] = true;
             LocalCacheManager.getInstance().loadFile(str);
         }
+		
+		private function onLoadHandler(type:String, url:String, content:*):void
+		{
+			switch(type)
+			{
+			    case Event.COMPLETE:
+					onCompleteHandler(url, content);
+					break;
+				case IOErrorEvent.IO_ERROR:
+					onIoErrorHandler(url);
+					break;
+			}
+		}
 
-        private function onCompleteHandler(evt:LocalCacheEvent) : void
+        private function onCompleteHandler(url:String, data:*) : void
         {
-            var url:String = evt.url;
             if(_loadingDic[url] != true)
                 return;
             if(url.substr(-3, 3) == "swf")
             {
-                if(evt.data is MovieClip)
-                    changeSwfToMovieClipDate(url, evt.data as MovieClip);
+                if(data is MovieClip)
+                    changeSwfToMovieClipDate(url, data as MovieClip);
                 else
-                    SourceCache.getInstance().put(url, evt.data, true);
+                    SourceCache.getInstance().put(url, data, true);
             }
             else if(url.substr(-2, 2) == "ng" || url.substr(-2, 2) == "pg")
             {
-                var myBitmap:BitmapData = Bitmap(evt.data).bitmapData;
+                var myBitmap:BitmapData = Bitmap(data).bitmapData;
                 SourceCache.getInstance().put(url, myBitmap, false, _gcDic[url]);
             }
             delete _loadingDic[url];
@@ -233,9 +243,8 @@ package GameCore.common.cache
             return getObject(url) as MovieClipData;
         }
 
-        private function onIoErrorHandler(evt:LocalCacheEvent) : void
+        private function onIoErrorHandler(url:String) : void
         {
-            var url:String = evt.url;
             _errorDic[url] = _errorDic[url] ? _errorDic[url]++ : 0;
             delete _loadingDic[url];
             delete _callbackDic[url];

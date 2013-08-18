@@ -1,11 +1,10 @@
-package com.zsj.commons.display
+package GameCore.common.display
 {
-	import com.zsj.commons.cache.SourceCache;
-
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import flash.utils.Dictionary;
 	import flash.utils.getTimer;
+	
+	import GameCore.common.cache.SourceCache;
 
 	public class MovieClipDataContainer extends EventDispatcher
 	{

@@ -4,7 +4,6 @@ package GameCore.common.loader
     import flash.display.LoaderInfo;
     import flash.display.MovieClip;
     import flash.events.Event;
-    import flash.events.EventDispatcher;
     import flash.events.IOErrorEvent;
     import flash.events.ProgressEvent;
     import flash.net.URLLoader;
@@ -15,7 +14,6 @@ package GameCore.common.loader
     import flash.utils.ByteArray;
     import flash.utils.Dictionary;
     
-    import GameCore.common.loader.events.LocalCacheEvent;
     import GameCore.gameconfig.loader_config;
     
     import org.osflash.signals.Signal;
@@ -243,9 +241,11 @@ package GameCore.common.loader
                 _curLoaderCount--;
                 sendHTTPwebRequest();
             }
+			loaderSignal.dispatch(IOErrorEvent.IO_ERROR,  _urlDic[evt.target], null);
+			
             delete _loadingDic[_urlDic[evt.target]];
             removeLoaderEvent(evt.target);
-			loaderSignal.dispatch(IOErrorEvent.IO_ERROR,  _urlDic[evt.target], null);
+			
         }
 
         private function removeLoaderEvent(obj:Object) : void

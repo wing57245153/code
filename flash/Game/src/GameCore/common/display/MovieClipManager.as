@@ -1,6 +1,6 @@
-package com.zsj.commons.display
+package GameCore.common.display
 {
-//    import com.zsj.util.TimerManager;
+	import GameCore.util.TimerManager;
 
     public class MovieClipManager
     {
@@ -11,7 +11,7 @@ package com.zsj.commons.display
         public function MovieClipManager()
         {
             _mcVec = new Vector.<BitmapMovieClip>();
-//            TimerManager.getInstance().add(33, updateDisplay);
+            TimerManager.getInstance().add(33, updateDisplay);
         }
 
         public static function getInstance() : MovieClipManager

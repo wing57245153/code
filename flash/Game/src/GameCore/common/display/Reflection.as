@@ -1,11 +1,9 @@
-package com.zsj.commons.display
+package GameCore.common.display
 {
-	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.system.ApplicationDomain;
-	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 
 	/**
