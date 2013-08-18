@@ -1,5 +1,6 @@
-#Thu Aug 15 20:12:08 CST 2013
+#Thu Aug 15 21:31:26 CST 2013
 pref_state_memento.org.eclipse.debug.ui.DebugVieworg.eclipse.debug.ui.DebugView=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<DebugViewMemento org.eclipse.debug.ui.BREADCRUMB_DROPDOWN_AUTO_EXPAND\="false"/>
 eclipse.preferences.version=1
+preferredDetailPanes=\u9ED8\u8BA4\u8BE6\u60C5\u9762\u677F\:\u9ED8\u8BA4\u8BE6\u60C5\u9762\u677F|
 preferredTargets=default\:default|
 org.eclipse.debug.ui.PREF_LAUNCH_PERSPECTIVES=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<launchPerspectives/>\r\n

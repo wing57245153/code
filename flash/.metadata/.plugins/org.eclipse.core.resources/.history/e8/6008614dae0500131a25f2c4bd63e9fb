@@ -1,0 +1,26 @@
+package modules.login
+{
+	import GameCore.core.BasicModule;
+	
+	import modules.login.view.LoginView;
+	
+	public class LoginModule extends BasicModule
+	{
+		public function LoginModule()
+		{
+			resUrl = "assets\login.swf";
+			super();
+		}
+		
+		override protected function loadUI():void
+		{
+			
+		}
+		
+		override protected function loadUIComplete():void
+		{
+			super.loadUI();
+			addChild(new LoginView());
+		}
+	}
+}

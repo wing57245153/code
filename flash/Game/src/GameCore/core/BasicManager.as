@@ -1,6 +1,5 @@
 package GameCore.core
 {
-	import GameCore.interfaces.Interface;
 	
 	import org.osflash.signals.Signal;
 

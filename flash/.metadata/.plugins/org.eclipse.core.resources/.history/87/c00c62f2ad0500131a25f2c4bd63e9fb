@@ -1,0 +1,33 @@
+package GameCore.core
+{
+	import GameCore.interfaces.IDepose;
+	
+	import flash.display.Sprite;
+	
+	import org.osflash.signals.Signal;
+
+	public class BasicModule extends Sprite implements IDepose
+	{
+		protected var messenger:Signal;//
+		protected var resUrl:String;
+		public function BasicModule()
+		{
+			messenger = Interface.gameBus;
+			loadUI();
+		}
+		
+		public function depose():void
+		{
+			
+		}
+		
+		protected function loadUI():void
+		{
+		}
+		
+		protected function loadUIComplete():void
+		{
+			
+		}
+	}
+}

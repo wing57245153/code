@@ -1,0 +1,6 @@
+<View sceneWidth="400" sceneHeight="300" sceneColor="0xffffff" sceneBg="" layers="1,1,1,0,第 1 层;2,1,1,0,第 2 层">
+  <Image url="png.login.clan" x="97" y="15" layer="2"/>
+  <TextInput text="TextInput" skin="png.comp.textinput" x="110" y="55" layer="1"/>
+  <TextInput text="TextInput" skin="png.comp.textinput" x="111" y="97" layer="1"/>
+  <Button label="进入" skin="png.comp.button" x="123" y="161" layer="1" var="enterBtn"/>
+</View>

@@ -1,0 +1,12 @@
+package modules.login
+{
+	import GameCore.core.BasicModule;
+	
+	public class LoginModule extends BasicModule
+	{
+		public function LoginModule()
+		{
+			super();
+		}
+	}
+}

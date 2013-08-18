@@ -1,0 +1,14 @@
+package GameCore.core
+{
+	import org.osflash.signals.Signal;
+
+	public class BasicController
+	{
+		protected var messenger:Signal;// 全局信号传递
+		protected
+		public function BasicController()
+		{
+			messenger = Interface.gameBus;
+		}
+	}
+}

@@ -1,0 +1,148 @@
+package
+{
+	import flash.display.Bitmap;
+	import flash.display.DisplayObject;
+	import flash.display.Sprite;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
+	import flash.events.Event;
+	import flash.events.IOErrorEvent;
+	
+	import fw.anim.AnimSprite;
+	import fw.anim.AnimTextureSheet;
+	import fw.anim.TileSheetHelper;
+	import fw.utils.Stats;
+	import fw.utils.loading.BigLoader;
+	
+	
+	[SWF (width="750", height="600")]
+	public class AnimDemo extends Sprite
+	{
+		private var _loader:BigLoader;	
+		private var	_texSheet:AnimTextureSheet;	
+		private var	_charAnim:AnimSprite;	
+		private var arFrames:Array;
+		private var arSprites:Array;
+		private var pause:Boolean= false;
+
+		public function AnimDemo()
+		{
+			addEventListener(Event.ADDED_TO_STAGE, onAdded);
+		}
+		
+		protected function onAdded(event:Event):void
+		{
+			stage.align = StageAlign.TOP_LEFT;
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.frameRate= 60;
+			
+			
+			var appWidth:Number= 750;
+			graphics.beginFill(0x434E8E);
+			graphics.drawRect(0,0, appWidth, 24);
+			graphics.endFill();
+			
+			graphics.beginFill(0xf0f0f0);
+			graphics.drawRect(0,24, appWidth, 600);
+			graphics.endFill();
+			
+			arSprites= [];
+			addEventListener(Event.ENTER_FRAME, onFrameUpdate);
+			
+			var st:DisplayObject= new Stats();
+			st.y= 20;
+			addChild(st);
+	
+			// load resources
+			_loader= new BigLoader();
+			_loader.add("data/111.json", "sheetData");
+			_loader.add("data/111.png", "sheet");
+			
+			_loader.addEventListener(Event.COMPLETE, onAnimLoaded);
+			_loader.addEventListener(IOErrorEvent.IO_ERROR, onLoadFailed);
+			_loader.start();	
+		}
+		
+		protected function onFrameUpdate(event:Event):void
+		{
+			if (pause){
+				return;
+			}
+			for (var i:int = 0; i < arSprites.length; i++) 	{
+				AnimSprite(arSprites[i]).updateAnimation();
+			}
+			
+		}
+		
+		protected function onAnimLoaded(event:Event):void
+		{
+			trace("onAnimLoaded");
+			pause=true;
+			var helper:TileSheetHelper = new TileSheetHelper();
+			var sheet:Bitmap = _loader.getLoadedAssetById("sheet");
+			_texSheet= 	helper.prepareAnimTexture(sheet.bitmapData, _loader.getLoadedAssetById("sheetData"));
+			
+			arFrames= createSeqArray(_texSheet.numFrames);
+			
+			var anim:AnimSprite;
+			var row:int;
+			
+			var lastX:Number=0;
+			var space:int;
+			
+			
+		
+			for (var i:int = 0; i < 1; i++) 	{
+				anim= createAnim();
+				if ((i%NUM_H)==0) lastX=0;
+				space= 60+(Math.random() * 70);
+				row = int(i/NUM_H);
+			
+				
+				//anim.x= 20 + 120*(i%NUM_H) + row*36; 
+				anim.x= lastX + space; 
+				anim.y= 150 + row*60;
+				
+				lastX= anim.x;
+				addChild(anim);
+				arSprites.push(anim);
+				anim.frame = (i*4)%12;
+				
+			}
+			
+			pause=false;
+			
+		}
+		private static const NUM_H:int = 6;
+		
+		
+		protected function onLoadFailed(event:IOErrorEvent):void
+		{
+			trace("Cannot find file!");
+			trace(event.text);
+		}
+		
+		private function createAnim():AnimSprite
+		{
+			var anim:AnimSprite = new AnimSprite();
+			
+			anim.initialize(_texSheet);
+			anim.addSequence("all", arFrames, 15);
+			
+			anim.play("all");
+			return anim;
+		}
+		
+		private function createSeqArray(count:int):Array
+		{
+			var arOut:Array= []; // of int
+			
+			for (var j:int = 0; j < count; j++) {
+				arOut.push(j);
+			}
+			
+			return arOut;
+		}
+		
+	}
+}

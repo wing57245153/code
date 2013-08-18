@@ -1,0 +1,9 @@
+package modules.login.event
+{
+	public class LoginEvent
+	{
+		public function LoginEvent()
+		{
+		}
+	}
+}

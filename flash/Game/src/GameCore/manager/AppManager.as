@@ -1,7 +1,8 @@
 package GameCore.manager
 {
 	import GameCore.core.BasicManager;
-	import GameCore.interfaces.Interface;
+	import GameCore.core.Interface;
+	import GameCore.events.AppEvent;
 	
 	import org.osflash.signals.Signal;
 
@@ -17,7 +18,7 @@ package GameCore.manager
 		{
 			new ModuleManager();
 			
-			messenger.dispatch("signal");
+			messenger.dispatch(AppEvent.MODULE_SHOW_WINDOW);
 		}
 	}
 }

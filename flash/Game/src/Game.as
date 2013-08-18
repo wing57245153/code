@@ -1,7 +1,9 @@
 package
 {
-	import GameCore.interfaces.Interface;
+	import GameCore.common.display.StageProxy;
+	import GameCore.core.Interface;
 	import GameCore.manager.AppManager;
+	import GameCore.manager.GameManager;
 	
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -22,9 +24,11 @@ package
 		
 		private function init():void
 		{
+			App.init(this);
+			StageProxy.regist(this.stage);
 			Interface.gameBus = new Signal();
-			
-			new AppManager();
+			Interface.loadAssets = App.loader.loadAssets;
+			new GameManager();
 		}
 	}
 }

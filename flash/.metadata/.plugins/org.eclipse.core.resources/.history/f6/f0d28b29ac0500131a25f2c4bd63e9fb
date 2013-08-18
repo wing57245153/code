@@ -1,0 +1,33 @@
+package GameCore.manager
+{
+	import GameCore.core.BasicManager;
+	
+	import flash.display.Loader;
+	import flash.events.Event;
+	import flash.net.URLRequest;
+
+	public class ModuleManager extends BasicManager
+	{
+		public function ModuleManager()
+		{
+			messenger.add(onModuleHandler);
+		}
+		
+		private function onModuleHandler(type:String):void
+		{
+			trace(type);
+			showModule();
+		}
+		
+		private function showModule():void
+		{
+			var loader:Loader = new Loader();
+			loader.loaderInfo.addEventListener(Event.COMPLETE, onCompleteHandler);
+			loader.load(new URLRequest("modules/login/LoginModule.swf"));
+		}
+		
+		protected function onCompleteHandler(event:Event):void
+		{
+		}
+	}
+}

@@ -1,0 +1,32 @@
+package GameCore.manager
+{
+	import GameCore.core.BasicManager;
+	
+	import flash.display.Loader;
+	import flash.events.Event;
+
+	public class ModuleManager extends BasicManager
+	{
+		public function ModuleManager()
+		{
+			messenger.add(onModuleHandler);
+		}
+		
+		private function onModuleHandler(type:String):void
+		{
+			trace(type);
+		}
+		
+		private function showModule():void
+		{
+			var loader:Loader = new Loader();
+			loader.loaderInfo.addEventListener(Event.COMPLETE, onCompleteHandler);
+		}
+		
+		protected function onCompleteHandler(event:Event):void
+		{
+			// TODO Auto-generated method stub
+			
+		}
+	}
+}

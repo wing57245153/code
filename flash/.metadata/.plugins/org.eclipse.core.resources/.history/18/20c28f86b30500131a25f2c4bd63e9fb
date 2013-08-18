@@ -1,0 +1,25 @@
+package GameCore.controller
+{
+	import GameCore.core.BasicController;
+	
+	import org.osflash.signals.Signal;
+	
+	public class LoginController extends BasicController
+	{
+		public function LoginController(signal:Signal=null)
+		{
+			super(signal);
+			
+		}
+		
+		override public function depose():void
+		{
+			
+		}
+		
+		override protected function moduleEventHandler():void
+		{
+			
+		}
+	}
+}

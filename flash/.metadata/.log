@@ -88,3 +88,21 @@ Binding(CTRL+SHIFT+G,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY com.adobe.flexbuilder.project 4 43 2013-08-16 10:57:42.907
+!MESSAGE 路径包含非法字符：资
+!STACK 0
+java.lang.Exception
+	at com.adobe.flexbuilder.project.internal.FlexProjectCore.createErrorStatus(FlexProjectCore.java:1019)
+	at com.adobe.flexbuilder.util.logging.GlobalLogImpl.log(GlobalLogImpl.java:66)
+	at com.adobe.flexbuilder.util.logging.GlobalLog.log(GlobalLog.java:52)
+	at com.adobe.flexide.launching.air.ADLLaunchHandler.modifyAppXMLforANEPackaging(ADLLaunchHandler.java:278)
+	at com.adobe.flexide.launching.air.ADLLaunchHandler.launch(ADLLaunchHandler.java:152)
+	at com.adobe.flexide.launching.AbstractFdbLaunchDelegate.launch(AbstractFdbLaunchDelegate.java:67)
+	at com.adobe.flexide.launching.AbstractFlexLaunchDelegate.launch(AbstractFlexLaunchDelegate.java:244)
+	at com.adobe.flexide.launching.AbstractFlexLaunchDelegate.launch(AbstractFlexLaunchDelegate.java:134)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:854)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:703)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:928)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$8.run(DebugUIPlugin.java:1132)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)

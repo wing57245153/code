@@ -1,0 +1,176 @@
+package GameCore.core
+{
+    import flash.display.*;
+    import flash.events.Event;
+    import flash.events.EventDispatcher;
+    import flash.geom.Point;
+
+    /**
+     * 舞台策略类，保存舞台的公用属性
+     * @author selon.xu
+     */
+    public class StageProxy
+    {
+        public static var stage:Stage;
+        public static var frameRate:uint;
+        public static var isRegisted:Boolean;
+        public static var registWidth:Number;
+        public static var registHeight:Number;
+		public static var curScale:Number = 1;
+		
+		public static var messager:EventDispatcher;
+
+        /**
+         * 注册舞台
+         * @param registStage Stage : 舞台
+         * @param registWidth Number : 舞台宽度
+         * @param registHeight Number : 舞台高度
+         */
+        public static function regist(registStage:Stage, registWidth:Number = 1300,
+            registHeight:Number = 800) : void
+        {
+            StageProxy.isRegisted = true;
+            StageProxy.stage = registStage;
+            StageProxy.frameRate = StageProxy.stage.frameRate;
+            StageProxy.registWidth = registWidth;
+            StageProxy.registHeight = registHeight;			
+			StageProxy.messager = new EventDispatcher();
+        }
+		
+		public static function addChild(child:DisplayObject):void
+		{
+			stage.addChild(child);
+		}
+		
+		public static function addChildAt(child:DisplayObject, index:int):DisplayObject
+		{
+			return stage.addChildAt(child, index);
+		}
+		
+		public static function removeChild(child:DisplayObject):void
+		{
+			stage.removeChild(child);
+		}
+		
+		public static function contains(child:DisplayObject):Boolean
+		{
+			return stage.contains(child);
+		}
+
+        /**
+         * 注册Resize方法
+         */
+        public static function registResize(func:Function) : void
+        {
+            unRegistResize(func);
+            StageProxy.stage.addEventListener(Event.RESIZE, func);
+        }
+
+        /**
+         * 移除Resize方法
+         */
+        public static function unRegistResize(func:Function) : void
+        {
+            StageProxy.stage.removeEventListener(Event.RESIZE, func);
+        }
+
+        /**
+         * 注册EnterFrame方法
+         */
+        public static function registEnterFrame(func:Function) : void
+        {
+            unRegistEnterFrame(func);
+            StageProxy.stage.addEventListener(Event.ENTER_FRAME, func);
+        }
+
+        /**
+         * 移除EnterFrame方法
+         */
+        public static function unRegistEnterFrame(func:Function) : void
+        {
+            StageProxy.stage.removeEventListener(Event.ENTER_FRAME, func);
+        }
+
+        /**
+         * 居中显示对象
+         */
+        public static function center(obj:*) : void
+        {
+            obj.x = stageWidth - obj.width >> 1;
+            obj.y = stageHeight - obj.height >> 1;
+        }
+
+		public static function set focus(val:InteractiveObject) : void
+		{
+			stage.focus = val;
+		}
+		
+		public static function get focus():InteractiveObject
+		{
+			return stage.focus;
+		}
+		
+		public static function get mousePos() : Point
+		{
+			return new Point(mouseX, mouseY);
+		}
+
+        /**
+         * 获取舞台鼠标X坐标
+         */
+        public static function get mouseX() : Number
+        {
+            return stage.mouseX;
+        }
+
+        /**
+         * 获取舞台鼠标Y坐标
+         */
+        public static function get mouseY() : Number
+        {
+            return stage.mouseY;
+        }
+
+        /**
+         * 舞台宽度
+         */
+        public static function get width() : Number
+        {
+            return Math.max(stage.stageWidth, minWidth);
+        }
+
+        /**
+         * 舞台高度
+         */
+        public static function get height() : Number
+        {
+            return Math.max(stage.stageHeight, minHeight);
+        }
+
+        public static function get minWidth() : Number
+        {
+            return Math.min(stage.stageWidth, registWidth);
+        }
+
+        public static function get minHeight() : Number
+        {
+            return Math.min(stage.stageHeight, registHeight);
+        }
+
+        /**
+         * 当前舞台宽度
+         */
+        public static function get stageWidth() : Number
+        {
+            return stage.stageWidth;
+        }
+
+        /**
+         * 当前舞台高度
+         */
+        public static function get stageHeight() : Number
+        {
+            return stage.stageHeight;
+        }
+    }
+}

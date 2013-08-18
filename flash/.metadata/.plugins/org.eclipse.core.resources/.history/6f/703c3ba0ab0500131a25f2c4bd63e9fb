@@ -1,0 +1,17 @@
+package modules.login
+{
+	import GameCore.core.BasicModule;
+	
+	public class LoginModule extends BasicModule
+	{
+		public function LoginModule()
+		{
+			super();
+		}
+		
+		override protected function loadUI():void
+		{
+			
+		}
+	}
+}
