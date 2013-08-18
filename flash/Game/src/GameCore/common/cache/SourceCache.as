@@ -1,11 +1,5 @@
-package com.zsj.commons.cache
+package GameCore.common.cache
 {
-    import com.zsj.commons.display.MovieClipData;
-    import com.zsj.commons.loader.LocalCacheManager;
-    import com.zsj.commons.loader.events.LocalCacheEvent;
-    import com.zsj.debug.Logger;
-    import com.zsj.util.TimerManager;
-
     import flash.display.Bitmap;
     import flash.display.BitmapData;
     import flash.display.MovieClip;
@@ -14,6 +8,9 @@ package com.zsj.commons.cache
     import flash.events.IOErrorEvent;
     import flash.utils.Dictionary;
     import flash.utils.getTimer;
+    
+    import GameCore.common.loader.LocalCacheManager;
+    import GameCore.common.loader.events.LocalCacheEvent;
 
     public class SourceCache extends EventDispatcher implements ISourceCache
     {

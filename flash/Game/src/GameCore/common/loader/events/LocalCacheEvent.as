@@ -1,4 +1,4 @@
-package com.zsj.commons.loader.events
+package GameCore.common.loader.events
 {
     import flash.events.Event;
 

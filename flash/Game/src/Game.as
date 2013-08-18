@@ -1,12 +1,11 @@
 package
 {
-	import GameCore.common.display.StageProxy;
-	import GameCore.core.Interface;
-	import GameCore.manager.AppManager;
-	import GameCore.manager.GameManager;
-	
 	import flash.display.Sprite;
 	import flash.events.Event;
+	
+	import GameCore.common.display.StageProxy;
+	import GameCore.core.Interface;
+	import GameCore.manager.GameManager;
 	
 	import org.osflash.signals.Signal;
 	

@@ -1,13 +1,5 @@
-package com.zsj.commons.loader
+package GameCore.common.loader
 {
-    import com.zsj.commons.loader.events.LocalCacheEvent;
-//    import com.zsj.core.Config;
-//    import com.zsj.debug.Logger;
-//    import com.zsj.manager.VersionManager;
-//
-//    import deng.fzip.FZip;
-//    import deng.fzip.FZipFile;
-
     import flash.display.Loader;
     import flash.display.LoaderInfo;
     import flash.display.MovieClip;
@@ -22,11 +14,17 @@ package com.zsj.commons.loader
     import flash.system.LoaderContext;
     import flash.utils.ByteArray;
     import flash.utils.Dictionary;
+    
+    import GameCore.common.loader.events.LocalCacheEvent;
+    import GameCore.gameconfig.loader_config;
+    
+    import org.osflash.signals.Signal;
 
-    public class LocalCacheManager extends EventDispatcher
+    public class LocalCacheManager 
     {
         private static var _instance:LocalCacheManager;
 
+		public var loaderSignal:Signal;
         private var _urlDic:Dictionary;
         private var _domainDic:Dictionary;
         private var _loadingDic:Dictionary;
@@ -35,6 +33,7 @@ package com.zsj.commons.loader
 
         public function LocalCacheManager()
         {
+			loaderSignal = new Signal();
             _urlDic = new Dictionary();
             _domainDic = new Dictionary();
             _loadingDic = new Dictionary();
@@ -58,23 +57,23 @@ package com.zsj.commons.loader
             //插队优化
             var i:int = 0;
             var j:int = 0;
-//            for(i = 0; i < Config.loadingQueue.length; i++)
+           for(i = 0; i < loader_config.PRIORITY_QUEUE.length; i++)
             {
-//                if(url.indexOf(Config.loadingQueue[i]) > -1)
-//                    break;
+               if(url.indexOf(loader_config.PRIORITY_QUEUE[i]) > -1)
+                   break;
             }
             if(i == 0)
             {
                 _httpUrlList.unshift(url);
             }
-//            else if(i < Config.loadingQueue.length)
+          else if(i < loader_config.PRIORITY_QUEUE.length)
             {
                 for(j = 0; j < _httpUrlList.length; j++)
                 {
                     for(var z:int = 0; z < i; z++)
                     {
-//                        if(_httpUrlList[j].indexOf(Config.loadingQueue[z]) > -1)
-//                            break;
+                       if(_httpUrlList[j].indexOf(loader_config.PRIORITY_QUEUE[z]) > -1)
+                           break;
                     }
                     if(z >= i)
                         break;
@@ -105,7 +104,8 @@ package com.zsj.commons.loader
             urlLoader.addEventListener(Event.COMPLETE, urlLoaderCompelteHandler);
             urlLoader.addEventListener(ProgressEvent.PROGRESS, onProgressHandler);
             urlLoader.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
-//            urlLoader.load(new URLRequest(url + "?" + VersionManager.getInstance().getVersion(url)));
+           //urlLoader.load(new URLRequest(url + "?" + VersionManager.getInstance().getVersion(url)));
+			urlLoader.load(new URLRequest(url));
             _curLoaderCount++;
         }
 
@@ -119,10 +119,10 @@ package com.zsj.commons.loader
             var stream:ByteArray = new ByteArray();
             stream.writeBytes(byte);
             stream.position = 0;
-            CONFIG::debug
-            {
-                Logger.debug("load completed: " + url);
-            }
+//            CONFIG::debug
+//            {
+//                Logger.debug("load completed: " + url);
+//            }
             var a:int = stream.readUnsignedByte();
             var b:int = stream.readUnsignedByte();
             var c:int = stream.readUnsignedByte();
@@ -168,9 +168,10 @@ package com.zsj.commons.loader
                     loader.loadBytes(byte);
                     break;
                 case "ta":
-                    var event:LocalCacheEvent =
-                        new LocalCacheEvent(Event.COMPLETE, url, URLLoader(evt.target).data);
-                    dispatchEvent(event);
+//                    var event:LocalCacheEvent =
+//                        new LocalCacheEvent(Event.COMPLETE, url, URLLoader(evt.target).data);
+//                    dispatchEvent(event);
+					loaderSignal.dispatch(Event.COMPLETE, url, URLLoader(evt.target).data);
                     delete _loadingDic[url];
                     break;
                 case "ml":
@@ -204,13 +205,15 @@ package com.zsj.commons.loader
             }
             var url:String = _loadingCXml.shift();
             delete _loadingDic[url];
-            dispatchEvent(new LocalCacheEvent(Event.COMPLETE, url, dic));
+           // dispatchEvent(new LocalCacheEvent(Event.COMPLETE, url, dic));
+			loaderSignal.dispatch(Event.COMPLETE, url, dic);
         }
 
         private function onProgressHandler(evt:ProgressEvent) : void
         {
-            dispatchEvent(new LocalCacheEvent(ProgressEvent.PROGRESS, _urlDic[evt.target],
-                {bytesLoaded: evt.bytesLoaded, bytesTotal: evt.bytesTotal}));
+//            dispatchEvent(new LocalCacheEvent(ProgressEvent.PROGRESS, _urlDic[evt.target],
+//                {bytesLoaded: evt.bytesLoaded, bytesTotal: evt.bytesTotal}));
+			loaderSignal.dispatch(ProgressEvent.PROGRESS, _urlDic[evt.target], {bytesLoaded: evt.bytesLoaded, bytesTotal: evt.bytesTotal});
         }
 
         private function onCompleteHandler(evt:Event) : void
@@ -224,16 +227,16 @@ package com.zsj.commons.loader
             {
                 content = URLLoader(evt.target).data;
             }
-            var event:LocalCacheEvent =
-                new LocalCacheEvent(Event.COMPLETE, _urlDic[evt.target], content);
+
+			loaderSignal.dispatch(Event.COMPLETE,  _urlDic[evt.target], content);
+			
             delete _loadingDic[_urlDic[evt.target]];
             removeLoaderEvent(evt.target);
-            dispatchEvent(event);
+			
         }
 
         private function ioErrorHandler(evt:IOErrorEvent) : void
         {
-//            Logger.debug("load failed: " + _urlDic[evt.target]);
             var url:String = _urlDic[evt.target];
             if(evt.target is URLLoader)
             {
@@ -241,9 +244,8 @@ package com.zsj.commons.loader
                 sendHTTPwebRequest();
             }
             delete _loadingDic[_urlDic[evt.target]];
-            var event:LocalCacheEvent = new LocalCacheEvent(IOErrorEvent.IO_ERROR, url, null);
-            dispatchEvent(event);
             removeLoaderEvent(evt.target);
+			loaderSignal.dispatch(IOErrorEvent.IO_ERROR,  _urlDic[evt.target], null);
         }
 
         private function removeLoaderEvent(obj:Object) : void

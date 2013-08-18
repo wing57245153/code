@@ -1,10 +1,7 @@
 package GameCore.manager
 {
 	import GameCore.core.BasicManager;
-	import GameCore.core.Interface;
 	import GameCore.events.AppEvent;
-	
-	import org.osflash.signals.Signal;
 
 	public class AppManager extends BasicManager
 	{
@@ -18,7 +15,7 @@ package GameCore.manager
 		{
 			new ModuleManager();
 			
-			messenger.dispatch(AppEvent.MODULE_SHOW_WINDOW);
+			messenger.dispatch(AppEvent.MODULE_SHOW_WINDOW, "modules/login/LoginModule.swf");
 		}
 	}
 }

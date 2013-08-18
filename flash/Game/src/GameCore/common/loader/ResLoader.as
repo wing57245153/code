@@ -1,19 +1,14 @@
-package res
+package GameCore.common.loader
 {
-	
-	import GameCore.gameconfig.loader_config;
-	import GameCore.gameconfig.swfres_config;
-	import GameCore.util.PathUtil;
-	
-	import debug.Debug;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
 	import flash.display.MovieClip;
-	import flash.display.Sprite;
-	import flash.events.*;
+	import flash.events.Event;
+	import flash.events.IOErrorEvent;
+	import flash.events.ProgressEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
@@ -21,16 +16,17 @@ package res
 	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
-	import flash.utils.getTimer;
+	
+	import GameCore.gameconfig.loader_config;
 	
 	/**
 	 * 资源统一加载
 	 * @author yangxr
 	 * @modify by selon
 	 */
-	public class DataRes
+	public class ResLoader
 	{
-		private static var _instance:DataRes;
+		private static var _instance:ResLoader;
 		private var _urlDic:Dictionary;
 		private var _loaderDic:Dictionary;
 		private var _loadingDic:Dictionary;
@@ -45,7 +41,7 @@ package res
 		private var _decodelist:Array;
 		private var _dataDic:Dictionary;
 		
-		public function DataRes()
+		public function ResLoader()
 		{
 			_urlDic = new Dictionary();
 			_loadingDic = new Dictionary();
@@ -61,10 +57,10 @@ package res
 			init();
 		}
 		
-		public static function getInstance():DataRes
+		public static function getInstance():ResLoader
 		{
 			if (_instance == null)
-				_instance = new DataRes();
+				_instance = new ResLoader();
 			return _instance;
 		}
 		
@@ -201,7 +197,8 @@ package res
 			
 			var loader:SourceLoader = _loaderPool.pop();
 			loader.info = _paramsDic[url];
-			loader.load(new URLRequest(PathUtil.getFullPath(url)));
+			loader.load(new URLRequest(url));
+			//loader.load(new URLRequest(PathUtil.getFullPath(url)));
 		}
 		
 		private function urlLoaderCompelteHandler(evt:Event):void
@@ -250,7 +247,7 @@ package res
 			}
 			else
 			{
-				Debug.Trace("load failed(" + info.errorTimes + "): " + info);
+//				Debug.Trace("load failed(" + info.errorTimes + "): " + info);
 				delete _paramsDic[info.url];
 				for each (var func:Function in info.onError)
 				{
@@ -560,12 +557,14 @@ package res
 		
 		public function getXMLData(path:String):XML
 		{
-			return XML(this.getSettingData(swfres_config.CONFIG_DATA, path));
+			//return XML(this.getSettingData(swfres_config.CONFIG_DATA, path));
+			return null;
 		}
 		
 		public function getNotXMLData(path:String):ByteArray
 		{
-			return ByteArray(this.getSettingData(swfres_config.CONFIG_DATA, path));
+			//return ByteArray(this.getSettingData(swfres_config.CONFIG_DATA, path));
+			return null;
 		}
 		
 		public function getImgNew(url: String):  BitmapData
