@@ -29,7 +29,7 @@ package GameCore.manager
 					showModule(url);
 					break;
 				case AppEvent.MODULE_HIDE_WINDOW:
-					hideModule();
+					hideModule(url);
 					break;
 				default:
 					break;
@@ -44,20 +44,12 @@ package GameCore.manager
 			ModuleLoader.getInstance().load(url);
 		}
 		
-		private function hideModule():void
+		private function hideModule(url:String):void
 		{
-			if(modulesGroup[1])
+			if(modulesGroup[url])
 			{
-				modulesGroup[1].visible = false;
+				modulesGroup[url].visible = false;
 			}
-		}
-		
-		protected function onCompleteHandler(event:Event):void
-		{
-			var content:DisplayObject = (event.target as LoaderInfo).content;
-			StageProxy.addChild(content);
-			
-			modulesGroup[1] = content;
 		}
 		
 		/**

@@ -3,19 +3,36 @@ package modules.login.view
 	import flash.events.MouseEvent;
 	
 	import modules.login.LoginUI;
+	import modules.login.event.LoginEvent;
+	
+	import org.osflash.signals.Signal;
+	import org.osflash.signals.natives.NativeSignal;
+	import org.osflash.signals.natives.sets.NativeSignalSet;
 	
 	public class LoginView extends LoginUI
 	{
-		public function LoginView()
+		protected var viewSignal:Signal;
+		
+		private var nativeSignal:NativeSignal;
+		public function LoginView(signal:Signal)
 		{
 			super();
-			enterBtn.addEventListener(MouseEvent.CLICK, onClickHandler);
+			this.viewSignal = signal;
+			
+			nativeSignal = new NativeSignal(enterBtn, MouseEvent.CLICK,MouseEvent);
+			nativeSignal.add(onClickHandler);
+			
+//			nativeSignal.
+			
+//			var signalSet:NativeSignalSet = new NativeSignalSet(null);
+//			signalSet.
+			//enterBtn.addEventListener(MouseEvent.CLICK, onClickHandler);
 		}
 		
 		protected function onClickHandler(event:MouseEvent):void
 		{
-			// TODO Auto-generated method stub
 			trace("enter");
+			viewSignal.dispatch(LoginEvent.HIDE_MODULE);
 		}
 	}
 }

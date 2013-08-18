@@ -16,7 +16,7 @@ package modules.login
 		override protected function loadUIComplete():void
 		{
 			super.loadUIComplete();
-			addChild(new LoginView());
+			addChild(new LoginView(signal));
 			new LoginController(signal);
 		}
 	}

@@ -2,6 +2,7 @@ package GameCore.controller
 {
 	import GameCore.core.BasicController;
 	import GameCore.events.AppEvent;
+	import GameCore.gameconfig.module_config;
 	
 	import modules.login.event.LoginEvent;
 	
@@ -32,7 +33,7 @@ package GameCore.controller
 		
 		private function hideModule():void
 		{
-			messenger.dispatch(AppEvent.MODULE_HIDE_WINDOW);
+			messenger.dispatch(AppEvent.MODULE_HIDE_WINDOW, module_config.LOGIN_MODULE);
 		}
 	}
 }

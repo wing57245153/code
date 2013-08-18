@@ -7,11 +7,11 @@ package GameCore.core
 	public class BasicController implements IDepose
 	{
 		protected var messenger:Signal;// 全局信号传递
-		protected var signal:Signal; // 模块内信号传递
+		protected var viewSignal:Signal; // 模块内信号传递
 		public function BasicController(signal:Signal = null)
 		{
 			messenger = Interface.gameBus;
-			this.signal = signal;
+			this.viewSignal = signal;
 			
 			initEvent();
 		}
@@ -23,9 +23,9 @@ package GameCore.core
 		
 		private function initEvent():void
 		{
-			if(signal)
+			if(viewSignal)
 			{
-				signal.add(moduleEventHandler);
+				viewSignal.add(moduleEventHandler);
 			}
 		}
 		
