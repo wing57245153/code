@@ -34,7 +34,8 @@ package GameCore.controller
 		
 		private function hideModule():void
 		{
-			messenger.dispatch(AppEvent.MODULE_HIDE_WINDOW, module_config.LOGIN_MODULE);
+			//messenger.dispatch(AppEvent.MODULE_HIDE_WINDOW, module_config.LOGIN_MODULE);
+			messenger.dispatch(AppEvent.MODULE_UNLOAD, module_config.LOGIN_MODULE);
 		}
 		
 		private function enterWorld():void

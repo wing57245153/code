@@ -2,6 +2,9 @@ package GameCore.space
 {
 	import flash.geom.Point;
 	
+	import GameCore.entity.Player;
+	import GameCore.entity.factory.EntityFactory;
+	
 	public class Space
 	{
 		private var m_parent:*;

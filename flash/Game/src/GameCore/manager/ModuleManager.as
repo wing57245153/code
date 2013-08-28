@@ -8,6 +8,7 @@ package GameCore.manager
 	import GameCore.common.display.StageProxy;
 	import GameCore.common.loader.ModuleLoader;
 	import GameCore.core.BasicManager;
+	import GameCore.core.BasicModule;
 	import GameCore.events.AppEvent;
 	import GameCore.gameconfig.module_config;
 	import GameCore.layer.LayerBase;
@@ -34,6 +35,9 @@ package GameCore.manager
 				case AppEvent.MODULE_HIDE_WINDOW:
 					hideModule(url);
 					break;
+				case AppEvent.MODULE_UNLOAD:
+					unLoaderModule(url);
+					break;
 				default:
 					break;
 			}
@@ -49,6 +53,19 @@ package GameCore.manager
 			if(modulesGroup[url])
 			{
 				modulesGroup[url].visible = false;
+			}
+		}
+		
+		private function unLoaderModule(url:String):void
+		{
+			var module:BasicModule = modulesGroup[url];
+			if(module)
+			{
+				module.depose();
+				if(module.parent)
+					module.parent.removeChild(module);
+				
+				delete modulesGroup[url];
 			}
 		}
 		

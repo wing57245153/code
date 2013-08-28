@@ -28,7 +28,6 @@ package GameCore.common.loader
         { 
 			moduleLoaderSignal = new Signal();
             _loadingDic = new Dictionary();
-           // LocalCacheManager.getInstance().addEventListener(Event.COMPLETE, onCompleteHandler);
 			LocalCacheManager.getInstance().loaderSignal.add(onCompleteHandler);
         }
 
@@ -36,18 +35,6 @@ package GameCore.common.loader
         {
             _loadingDic[url] = true;
             LocalCacheManager.getInstance().loadFile(url);
-//            var isFrame:Boolean;
-////            for each(var path:String in Config.frameList)
-//            {
-////                if(url.indexOf(path) > -1)
-//                {
-//                    isFrame = true;
-////                    break;
-//                }
-//            }
-//            if(!isFrame)
-//                Interface.gameBus.dispatchEvent(new iEvent(AppEvent.LOADING_MODULE_BEGIN,
-//                    {name: "模块"}));
         }
 
         private function onCompleteHandler(type:String, url:String, content:*) : void
@@ -63,15 +50,6 @@ package GameCore.common.loader
 				}
 				
 			}
-//            if(_loadingDic[evt.url])
-//            {
-////                Interface.gameBus.dispatchEvent(new iEvent(AppEvent.LOADING_MODULE_END));
-//                var item:ResLoaderItem = new ResLoaderItem();
-//                item.data = evt.data;
-//                item.url = evt.url;
-//                dispatchEvent(new LoaderEvent(ModuleLoader.COMPLETE, item));
-//                delete _loadingDic[evt.url];
-//            }
         }
     }
 }

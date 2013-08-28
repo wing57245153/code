@@ -102,7 +102,6 @@ package GameCore.common.loader
             urlLoader.addEventListener(Event.COMPLETE, urlLoaderCompelteHandler);
             urlLoader.addEventListener(ProgressEvent.PROGRESS, onProgressHandler);
             urlLoader.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
-           //urlLoader.load(new URLRequest(url + "?" + VersionManager.getInstance().getVersion(url)));
 			urlLoader.load(new URLRequest(url));
             _curLoaderCount++;
         }
@@ -165,25 +164,6 @@ package GameCore.common.loader
                     loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
                     loader.loadBytes(byte);
                     break;
-                case "ta":
-//                    var event:LocalCacheEvent =
-//                        new LocalCacheEvent(Event.COMPLETE, url, URLLoader(evt.target).data);
-//                    dispatchEvent(event);
-					loaderSignal.dispatch(Event.COMPLETE, url, URLLoader(evt.target).data);
-                    delete _loadingDic[url];
-                    break;
-                case "ml":
-                    _loadingCXml.push(url);
-//                    var zip:FZip = new FZip();
-//                    zip.addEventListener(Event.COMPLETE, onCompressXmlLoaded);
-//                    zip.loadBytes(URLLoader(evt.target).data);
-                    break;
-                case "zd":
-                    _loadingCXml.push(url);
-//                    var zip2:FZip = new FZip();
-//                    zip2.addEventListener(Event.COMPLETE, onCompressXmlLoaded);
-//                    zip2.loadBytes(URLLoader(evt.target).data);
-                    break;
             }
             byte = null;
             writeByte = null;
@@ -209,8 +189,6 @@ package GameCore.common.loader
 
         private function onProgressHandler(evt:ProgressEvent) : void
         {
-//            dispatchEvent(new LocalCacheEvent(ProgressEvent.PROGRESS, _urlDic[evt.target],
-//                {bytesLoaded: evt.bytesLoaded, bytesTotal: evt.bytesTotal}));
 			loaderSignal.dispatch(ProgressEvent.PROGRESS, _urlDic[evt.target], {bytesLoaded: evt.bytesLoaded, bytesTotal: evt.bytesTotal});
         }
 
