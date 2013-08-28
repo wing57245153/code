@@ -27,6 +27,7 @@ package GameCore.controller
 			{
 				case LoginEvent.HIDE_MODULE:
 					hideModule();
+					enterWorld();
 					break;
 			}
 		}
@@ -34,6 +35,11 @@ package GameCore.controller
 		private function hideModule():void
 		{
 			messenger.dispatch(AppEvent.MODULE_HIDE_WINDOW, module_config.LOGIN_MODULE);
+		}
+		
+		private function enterWorld():void
+		{
+			messenger.dispatch(AppEvent.MODULE_SHOW_WINDOW, module_config.WORLD_MODULE);
 		}
 	}
 }

@@ -29,10 +29,9 @@ package GameCore.core
 		{
 			if(resUrl == null)
 				loadUIComplete();
+			else
+				Interface.loadAssets([resUrl], new Handler(loadUIComplete));
 			
-//			App.loader.loadAssets([resUrl], new Handler(loadUIComplete));
-			Interface.loadAssets([resUrl], new Handler(loadUIComplete));
-//			Interface.loadAssets([resUrl], null);
 		}
 		
 		protected function loadUIComplete():void

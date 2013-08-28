@@ -9,6 +9,9 @@ package GameCore.manager
 	import GameCore.common.loader.ModuleLoader;
 	import GameCore.core.BasicManager;
 	import GameCore.events.AppEvent;
+	import GameCore.gameconfig.module_config;
+	import GameCore.layer.LayerBase;
+	import GameCore.layer.ModuleLayer;
 
 	public class ModuleManager extends BasicManager
 	{
@@ -38,9 +41,6 @@ package GameCore.manager
 		
 		private function showModule(url:String):void
 		{
-//			var loader:Loader = new Loader();
-//			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onCompleteHandler);
-//			loader.load(new URLRequest("modules/login/LoginModule.swf"));
 			ModuleLoader.getInstance().load(url);
 		}
 		
@@ -57,10 +57,20 @@ package GameCore.manager
 		 */
 		private function onModuleLoadHandler(type:String, url:String, content:*):void
 		{
+			var parent:LayerBase;
+			var moduleInfo:Object = module_config.MODUL_INFO["url"];
+			if(moduleInfo == null || moduleInfo["layer"] == null)
+			{
+				parent = ModuleLayer.getInstance();
+			}
+			else 
+			{
+				parent = module_config.LAYER_INFO[moduleInfo["layer"]];
+			}
 			switch(type)
 			{
 				case ModuleLoader.COMPLETE:
-					StageProxy.addChild(content);
+					parent.addChild(content);
 					modulesGroup[url] = content;
 					break;
 			}

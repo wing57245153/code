@@ -15,6 +15,7 @@ package GameCore.manager
 		private function init():void
 		{
 			new ModuleManager();
+			new LayerManager();
 			
 			messenger.dispatch(AppEvent.MODULE_SHOW_WINDOW, module_config.LOGIN_MODULE);
 		}
