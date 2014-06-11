@@ -63,18 +63,17 @@ print("----ClassB----", classB.val.id)
 print(classB.id )
 
 local Vector2d = class("Vector2d")
+
 function Vector2d:ctor(x, y)
     self.x = x
     self.y = y
-
-    --self.__add = self.add
-    metatable = getmetatable(self)
-    metatable.__add = self.add
 end
 
 function Vector2d.add(a, b)
 	return Vector2d.new(a.x + b.x, a.y + b.y)
 end
+
+Vector2d.__add = Vector2d.add
 
 local v1 = Vector2d.new(100, 200)
 print(v1.x, v1.y)
