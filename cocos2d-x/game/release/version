@@ -1,1 +1,84 @@
 1.0.2
+print("hello world")
+
+local A = {}
+local t = {}
+t.id = 100
+
+local mt = {}
+--[[
+mt.__index = function( table, key )
+	print("----get---- value----")
+	return t[key]
+end
+
+mt.__newindex = function( table, key, value )
+	print("----set----value-----")
+	t[key] = value
+end
+]]
+
+mt.__index = mt
+setmetatable(A, mt)
+
+local mtmt = {}
+
+mtmt.__index = function( table, key )
+	print("----get---- value---mtmt-")
+	return t[key]
+end
+
+mtmt.__newindex = function( table, key, value )
+	print("----set----value-----")
+	t[key] = value
+end
+setmetatable(mt, mtmt)
+
+--A["id"] = 100
+print(A.id)
+
+require "extern"
+
+local ClassA = class("ClassA")
+
+function ClassA:ctor()
+    print("-------cotr-------")
+    self.id = 100
+
+    self.val = {}
+    local mt = {}
+    mt.__index = function( table, key )
+    	return 1001
+    end
+
+    setmetatable(self.val, mt)
+end
+
+local classA = ClassA.new()
+print("---xxx--", classA.val.id)
+
+local ClassB = class("ClassB", ClassA)
+local classB = ClassB.new()
+print("----ClassB----", classB.val.id)
+print(classB.id )
+
+local Vector2d = class("Vector2d")
+function Vector2d:ctor(x, y)
+    self.x = x
+    self.y = y
+
+    --self.__add = self.add
+    metatable = getmetatable(self)
+    metatable.__add = self.add
+end
+
+function Vector2d.add(a, b)
+	return Vector2d.new(a.x + b.x, a.y + b.y)
+end
+
+local v1 = Vector2d.new(100, 200)
+print(v1.x, v1.y)
+local v2 = Vector2d.new(200, 300)
+
+local v3 = v1 + v2
+print(v3.x, v3.y)
